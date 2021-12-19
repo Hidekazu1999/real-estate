@@ -3,11 +3,14 @@ package br.edu.ifpb.padroes;
 import br.edu.ifpb.padroes.domain.Apartment;
 import br.edu.ifpb.padroes.domain.Bungalow;
 import br.edu.ifpb.padroes.domain.Tenement;
+import br.edu.ifpb.padroes.payment.CompoundPayment;
 import br.edu.ifpb.padroes.payment.PaymentService;
 
 public class Main {
     public static void main(String[] args) {
 
+    	PaymentService paymentService = new PaymentService();
+    	
         Apartment apartment = new Apartment();
         apartment.setAddress("Rua x");
         apartment.setBuilder("Apartamento construtura");
@@ -22,13 +25,13 @@ public class Main {
         bungalow.setAddress("Rua y");
         bungalow.setBuilder("Cortiço construtura");
         bungalow.setPrice(100000);
-
-        PaymentService paymentService = new PaymentService();
+        
+        CompoundPayment compoundPayments = new CompoundPayment(apartment, bungalow, tenament);
 
         // TODO - reduzir chamadas múltiplas para uma única chamada para o método pay() utilizando o padrão composite
-        paymentService.pay(apartment);
-        paymentService.pay(bungalow);
-        paymentService.pay(tenament);
+          paymentService.pay(compoundPayments);
+//        paymentService.pay(bungalow);
+//        paymentService.pay(tenament);
 
 
     }
